@@ -1,6 +1,6 @@
 A cybersecurity standalone IDS (Intrusion Detection System) application for the Advantec MIC-7700, with comments for engineers working to detect intrusions on the IEC 61850 Goose SV messaging (5ms latency). The Advantec MIC-7700 is assumed to be running a real time hardended Linux-based OS; dependencies are outlined below, this is a demo pre-production prototype only.
 ---
-### `transformer_monitor.cpp`
+### `IEC 61850 IDS_Cyber_Demo.cpp`
 ```cpp
 // IEC 61850 IDS_Cyber_Demo.cpp
 // Cybersecurity monitoring program for Advantec MIC-7700 to process Goose SV data from 50 fibre ports
