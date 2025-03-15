@@ -1,9 +1,6 @@
-Below is a revised version of your cybersecurity code tailored for the Advantec MIC-7700, complete with detailed comments and fixes to ensure it builds and runs smoothly as a standalone setup. I've addressed potential build issues, improved clarity, and provided step-by-step instructions to make it plug-and-play for the engineer. The Advantec MIC-7700 is assumed to be running a Linux-based OS (common for such industrial PCs), and I'll ensure all dependencies are clearly outlined.
-
+A cybersecurity standalone IDS (Intrusion Detection System) application for the Advantec MIC-7700, with comments for engineers working to detect intrusions on the IEC 61850 Goose SV messaging (5ms latency). The Advantec MIC-7700 is assumed to be running a real time hardended Linux-based OS (common for such industrial PCs); dependencies are outlined below, this is a demo pre-production prototype only.
 ---
-
-### Revised Code: `transformer_monitor.cpp`
-
+### `transformer_monitor.cpp`
 ```cpp
 // transformer_monitor.cpp
 // Cybersecurity monitoring program for Advantec MIC-7700 to process Goose SV data from 50 fibre ports
@@ -38,9 +35,9 @@ Below is a revised version of your cybersecurity code tailored for the Advantec 
 
 // Structure for Goose SV data
 struct GooseData {
-    float voltage;              // Voltage value (e.g., 230V)
-    float current;              // Current value (e.g., 50A)
-    // Add more fields as per IEC 61850 Goose SV spec if needed
+    float voltage;              // Voltage value (e.g., 430V)
+    float current;              // Current value (e.g., 2000A)
+    // Add more fields as per IEC 61850 Goose SV spec if needed, grid codes TC57 when they (eventually) arrive <80)
 };
 
 // Secure message structure
@@ -296,7 +293,7 @@ int main() {
 
 ---
 
-### Key Changes and Fixes
+### Key Changes and Fixes from v0.1
 
 1. **Added Missing Include**: Added `#include <openssl/err.h>` for OpenSSL error handling functions.
 2. **Corrected Message Parsing**: Changed `msg.data = buffer` to `msg.data = std::string(buffer, bytes_received)` to handle binary data correctly.
@@ -310,7 +307,7 @@ int main() {
 
 ### Build and Run Instructions
 
-Assuming the Advantec MIC-7700 runs a Debian-based Linux OS (e.g., Ubuntu), follow these steps to build and run the code. These instructions are designed to be straightforward, allowing the engineer to set it up easily.
+Assuming the Advantec MIC-7700 runs a Debian-based Linux OS (e.g., Ubuntu), follow these steps to build and run the code. These instructions are designed to be straightforward, allowing the engineer to set it up easily for demo purposes. In production you'll be using something else probably as discussed.
 
 #### Step 1: Prepare the Environment
 Install the necessary dependencies on the MIC-7700. Connect to the device via SSH or a terminal and run:
@@ -369,7 +366,7 @@ This creates an executable named `transformer_monitor`. If there are errors, che
 Execute the program:
 
 ```bash
-./transformer_monitor
+./IDS_monitor
 ```
 
 The program will:
@@ -384,10 +381,9 @@ The program will:
 - Test with a client sending data to ports 1000-1049 if available, or implement sensor logic as noted below.
 
 ---
-
 ### Notes for the Engineer
 
-- **Sensor Integration**: The `read_sensor_data()` function is a placeholder. Replace it with actual sensor reading logic specific to the MIC-7700's hardware (e.g., using I2C or GPIO libraries for sensors like W1 or DHT22).
+- **Sensor Integration**: The `read_sensor_data()` function is a placeholder. Replace it with actual sensor reading logic specific to the MIC-7700's hardware (e.g., using I2C or GPIO libraries).
 - **Goose SV Parsing**: The current code simulates Goose SV data. Implement parsing logic in `handleClient` to extract real Goose SV data from `msg.data`.
 - **Security**: The HMAC key is hardcoded for simplicity. In production, use a secure key management system (e.g., a file with restricted permissions or a hardware security module).
 - **MAC Addresses**: The MAC is hardcoded as "00:11:22:33:44:55". Modify `handleClient` to extract the real MAC from incoming messages or network packets.
@@ -396,9 +392,8 @@ The program will:
 ---
 
 ### Troubleshooting
-
 - **Build Errors**: If headers or libraries are missing, verify the `libssl-dev` and `libncurses5-dev` packages are installed correctly.
 - **Runtime Errors**: Check if ports are in use (`netstat -tuln | grep 1000`) and free them if necessary.
 - **Display Issues**: Ensure the terminal supports ncurses (most Linux terminals do).
 
-With these steps, the engineer should be able to plug in the MIC-7700, follow the instructions, and have a working standalone cybersecurity monitor.
+This completes the demo of an IDS IEC 61850 standalone cybersecurity monitor for energy and industrial networks.
