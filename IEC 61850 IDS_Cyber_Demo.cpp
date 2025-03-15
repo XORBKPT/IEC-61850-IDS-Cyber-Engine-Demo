@@ -1,4 +1,4 @@
-// transformer_monitor.cpp
+// IEC 61850 IDS_Cyber_Demo.cpp
 // Cybersecurity monitoring program for Advantec MIC-7700 to process Goose SV data from 50 fibre ports
 
 #include <iostream>         // Standard I/O operations
@@ -116,7 +116,7 @@ bool checkRanges(const GooseData& data) {
            (data.current >= 0 && data.current <= 100);
 }
 
-// Placeholder for sensor data reading (to be implemented by engineer)
+// Placeholder for sensor data reading (to be implemented by engineers)
 GooseData read_sensor_data() {
     // TODO: Replace with actual sensor reading logic for MIC-7700
     return {230.0f, 50.0f}; // Simulated values
