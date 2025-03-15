@@ -1,8 +1,8 @@
-A cybersecurity standalone IDS (Intrusion Detection System) application for the Advantec MIC-7700, with comments for engineers working to detect intrusions on the IEC 61850 Goose SV messaging (5ms latency). The Advantec MIC-7700 is assumed to be running a real time hardended Linux-based OS (common for such industrial PCs); dependencies are outlined below, this is a demo pre-production prototype only.
+A cybersecurity standalone IDS (Intrusion Detection System) application for the Advantec MIC-7700, with comments for engineers working to detect intrusions on the IEC 61850 Goose SV messaging (5ms latency). The Advantec MIC-7700 is assumed to be running a real time hardended Linux-based OS; dependencies are outlined below, this is a demo pre-production prototype only.
 ---
 ### `transformer_monitor.cpp`
 ```cpp
-// transformer_monitor.cpp
+// IEC 61850 IDS_Cyber_Demo.cpp
 // Cybersecurity monitoring program for Advantec MIC-7700 to process Goose SV data from 50 fibre ports
 
 #include <iostream>         // Standard I/O operations
@@ -306,11 +306,9 @@ int main() {
 ---
 
 ### Build and Run Instructions
-
-Assuming the Advantec MIC-7700 runs a Debian-based Linux OS (e.g., Ubuntu), follow these steps to build and run the code. These instructions are designed to be straightforward, allowing the engineer to set it up easily for demo purposes. In production you'll be using something else probably as discussed.
-
+Assuming the Advantec MIC-7700 runs a Debian-based Linux OS (e.g., Ubuntu), follow these steps to build and run the demo code:
 #### Step 1: Prepare the Environment
-Install the necessary dependencies on the MIC-7700. Connect to the device via SSH or a terminal and run:
+Install the necessary dependencies on the MIC-7700. Connect to the device via SSH or better air-gapped from the terminal and run:
 
 ```bash
 sudo apt update
@@ -322,10 +320,10 @@ sudo apt install -y g++ libssl-dev libncurses5-dev
 - `libncurses5-dev`: ncurses library for the terminal UI
 
 #### Step 2: Save the Code
-Copy the code above into a file named `transformer_monitor.cpp` on the MIC-7700. You can use a text editor like `nano`:
+Copy the code above into a file named `IEC 61850 IDS_Cyber_Demo.cpp` on the MIC-7700. You can use a text editor like `nano`:
 
 ```bash
-nano transformer_monitor.cpp
+nano IEC 61850 IDS_Cyber_Demo.cpp
 ```
 
 Paste the code, then save and exit (`Ctrl+O`, `Enter`, `Ctrl+X`).
@@ -344,11 +342,11 @@ CXX = g++
 CXXFLAGS = -std=c++11 -Wall -Wextra
 LIBS = -pthread -lssl -lcrypto -lncurses
 
-transformer_monitor: transformer_monitor.cpp
-	$(CXX) $(CXXFLAGS) -o transformer_monitor transformer_monitor.cpp $(LIBS)
+transformer_monitor: trIEC 61850 IDS_Cyber_Demo.cpp
+	$(CXX) $(CXXFLAGS) -o IEC 61850 IDS_Cyber_Demo IEC 61850 IDS_Cyber_Demo.cpp $(LIBS)
 
 clean:
-	rm -f transformer_monitor
+	rm -f IEC 61850 IDS_Cyber_Demo
 ```
 
 Save and exit.
@@ -360,20 +358,20 @@ Compile the code using the Makefile:
 make
 ```
 
-This creates an executable named `transformer_monitor`. If there are errors, check the compiler output for missing dependencies or typos.
+This creates an executable named `IEC 61850 IDS_Cyber_Demo`. If there are errors; check compiler output for missing dependencies or typos.
 
 #### Step 5: Run the Program
 Execute the program:
 
 ```bash
-./IDS_monitor
+./IEC 61850 IDS_Cyber_Demo
 ```
 
 The program will:
 - Listen on ports 1000-1049.
 - Display a terminal UI showing risk levels for each port.
 - Process incoming messages (simulated in this version).
-- Exit gracefully with `Ctrl+C`.
+- Exit via `Ctrl+C`.
 
 #### Step 6: Verify Operation
 - Ensure no "port in use" errors occur (thanks to `SO_REUSEADDR`).
@@ -383,9 +381,9 @@ The program will:
 ---
 ### Notes for the Engineer
 
-- **Sensor Integration**: The `read_sensor_data()` function is a placeholder. Replace it with actual sensor reading logic specific to the MIC-7700's hardware (e.g., using I2C or GPIO libraries).
+- **System Integration**: The `read_sensor_data()` function is a placeholder. Replace it with actual energy sensor reading logic specific to the MIC-7700's hardware (using I2C or GPIO libraries or interfaces depending on protocols for exmaple UMG-512 Pro).
 - **Goose SV Parsing**: The current code simulates Goose SV data. Implement parsing logic in `handleClient` to extract real Goose SV data from `msg.data`.
-- **Security**: The HMAC key is hardcoded for simplicity. In production, use a secure key management system (e.g., a file with restricted permissions or a hardware security module).
+- **Security**: The HMAC key is hardcoded for simplicity. In production, use a secure key management system (e.g., a file with restricted permissions or implement hardware security e.g. Infineon).
 - **MAC Addresses**: The MAC is hardcoded as "00:11:22:33:44:55". Modify `handleClient` to extract the real MAC from incoming messages or network packets.
 - **Firewall**: If the MIC-7700 has a firewall, ensure ports 1000-1049 are open for incoming connections (e.g., `sudo ufw allow 1000:1049/tcp`).
 
@@ -396,4 +394,4 @@ The program will:
 - **Runtime Errors**: Check if ports are in use (`netstat -tuln | grep 1000`) and free them if necessary.
 - **Display Issues**: Ensure the terminal supports ncurses (most Linux terminals do).
 
-This completes the demo of an IDS IEC 61850 standalone cybersecurity monitor for energy and industrial networks.
+This completes the demo of an IDS IEC 61850 standalone cybersecurity monitor for Goose SV in energy and industrial networks.
