@@ -1,4 +1,4 @@
-A cybersecurity standalone IDS (Intrusion Detection System) application for the Advantec MIC-7700, with comments for engineers working to detect intrusions on the IEC 61850 Goose SV messaging (5ms latency). The Advantec MIC-7700 is assumed to be running a real time hardended Linux-based OS; dependencies are outlined below, this is a demo pre-production prototype only.
+A cybersecurity standalone IDS (Intrusion Detection System) application for the Advantec MIC-7700, with comments for students to practice detecting intrusions on IEC 61850 Goose SV messaging (5ms latency) in lab setups. The Advantec MIC-7700 is assumed to be running a real time hardended Linux-based OS; dependencies are outlined below, this is a demo prototype only not intended for production, for educational use only.
 ---
 ### `IEC 61850 IDS_Cyber_Demo.cpp`
 ```cpp
@@ -307,8 +307,8 @@ int main() {
 
 ### Build and Run Instructions
 Assuming the Advantec MIC-7700 runs a Debian-based Linux OS (e.g., Ubuntu), follow these steps to build and run the demo code:
-#### Step 1: Prepare the Environment
-Install the necessary dependencies on the MIC-7700. Connect to the device via SSH or better air-gapped from the terminal and run:
+#### Step 1: Prep the Environment
+Install the necessary dependencies on the MIC-7700. Connect to the device via SSH or better an air-gapped from the terminal and run:
 
 ```bash
 sudo apt update
@@ -392,6 +392,6 @@ The program will:
 ### Troubleshooting
 - **Build Errors**: If headers or libraries are missing, verify the `libssl-dev` and `libncurses5-dev` packages are installed correctly.
 - **Runtime Errors**: Check if ports are in use (`netstat -tuln | grep 1000`) and free them if necessary.
-- **Display Issues**: Ensure the terminal supports ncurses (most Linux terminals do).
+- **Display Issues**: Ensure the terminal supports ncurses (most Linux terminals do, just saying).
 
-This completes the demo of an IDS IEC 61850 standalone cybersecurity monitor for Goose SV in energy and industrial networks.
+This completes the demo of an IDS IEC 61850 standalone cybersecurity monitor for Goose SV for students of the energy sectors or industry.
